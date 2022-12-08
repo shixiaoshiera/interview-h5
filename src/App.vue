@@ -1,15 +1,22 @@
 <template>
   <div>
-    <h1>我是根组件</h1>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {
+import { userLogin } from '@/api/user.js'
 
+export default {
+  async created () {
+    const { data } = await userLogin({
+      username: 'wuhan87',
+      password: '123456'
+    })
+    console.log(data)
+  }
 }
 </script>
 
 <style>
-
 </style>
