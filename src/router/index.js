@@ -16,7 +16,7 @@ import user from '@/views/user.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/login' },
+  { path: '/', redirect: '/layout' },
   { path: '/detail', component: detail },
   { path: '/login', component: login },
   { path: '/register', component: register },
