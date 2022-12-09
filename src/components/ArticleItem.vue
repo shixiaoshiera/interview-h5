@@ -1,56 +1,31 @@
 <template>
-  <div class="article-page">
-    <!-- 顶部导航 -->
-    <nav class="my-nav van-hairline--bottom">
-      <a href="javascript:;">推荐</a>
-      <a href="javascript:;">最新</a>
-      <div class="logo"><img src="@/assets/logo.png" alt="" /></div>
-    </nav>
-
-    <!-- 面经列表 -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <ArticleItem
-        v-for="item in list"
-        :key="item.id"
-        :item="item"
-      ></ArticleItem>
-    </van-list>
+  <div>
+    <!-- 面经列表项 -->
+    <van-cell class="article-item">
+      <template #title>
+        <div class="head">
+          <img :src="item.avatar" alt="" />
+          <div class="con">
+            <p class="title van-ellipsis">{{ item.stem }}</p>
+            <p class="other">{{ item.creator }} | {{ item.createdAt }}</p>
+          </div>
+        </div>
+      </template>
+      <template #label>
+        <div class="body van-multi-ellipsis--l2" v-html="item.content"></div>
+        <div class="foot">
+          点赞 {{ item.likeCount }} | 浏览 {{ item.views }}
+        </div>
+      </template>
+    </van-cell>
   </div>
 </template>
 
 <script>
-import { getArticleList } from '@/api/article.js'
 export default {
-  name: 'article-page',
-  data () {
-    return {
-      list: [],
-      loading: false,
-      finished: false,
-      current: 30,
-      pageSize: 10
-    }
-  },
-  methods: {
-    async onLoad () {
-      // 异步更新数据
-      const { data } = await getArticleList({
-        current: this.current,
-        pageSize: this.pageSize
-      })
-      console.log(data)
-      this.list.push(...data.data.rows)
-      this.loading = false
-      this.current++
-      if (!data.data.rows.length) {
-        this.finished = true
-      }
-    }
+  name: 'ArticleItem',
+  props: {
+    item: Object
   }
 }
 </script>

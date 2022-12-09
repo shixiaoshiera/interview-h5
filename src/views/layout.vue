@@ -1,19 +1,5 @@
 <template>
   <div class="layout-page">
-    <!-- 顶部导航 -->
-    <van-nav-bar fixed placeholder>
-      <template #left>
-        <van-tabs v-model="active">
-          <van-tab title="推荐"></van-tab>
-          <van-tab title="最新"></van-tab>
-        </van-tabs>
-      </template>
-
-      <template #right>
-        <img src="../assets/logo.png" alt="" />
-      </template>
-    </van-nav-bar>
-
     <!-- 首页架子 - 内容区域 -->
     <router-view></router-view>
 
@@ -39,15 +25,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.van-nav-bar__right {
-  img {
-    height: 28px;
-  }
-}
-
-.van-tabs__line {
-  width: 14px;
-  height: 2px;
-  background-color: #222222;
-}
 </style>

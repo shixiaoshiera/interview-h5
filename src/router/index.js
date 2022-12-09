@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { getToken } from '@/utils/local.js'
 
 // 一级路由
 import detail from '@/views/detail.vue'
@@ -35,6 +36,20 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+// 页面拦截白名单
+const whiteList = ['/login', '/register']
+
+router.beforeEach((to, from, next) => {
+  // console.log(to, from)
+
+  // 白名单或有token不拦截，其余情况一律跳转登录页
+  if (whiteList.includes(to.path) || getToken()) {
+    next()
+  } else {
+    next('/login')
+  }
 })
 
 export default router
