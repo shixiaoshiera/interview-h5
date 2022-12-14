@@ -1,22 +1,45 @@
 <template>
   <div class="user-page">
-    我的
+    <div class="user">
+      <img v-if="info.avatar" :src="info.avatar" alt="" />
+      <img v-else src="@/assets/logo.png" alt="" />
+      <h3>{{ info.username }}</h3>
+    </div>
+    <van-grid clickable :column-num="3" :border="false">
+      <van-grid-item icon="clock-o" text="历史记录" to="/" />
+      <van-grid-item icon="bookmark-o" text="我的收藏" to="/collect" />
+      <van-grid-item icon="thumb-circle-o" text="我的点赞" to="/like" />
+    </van-grid>
+
+    <van-cell-group class="mt20">
+      <van-cell title="推荐分享" is-link />
+      <van-cell title="意见反馈" is-link />
+      <van-cell title="关于我们" is-link />
+      <van-cell @click="doLogout" title="退出登录" is-link />
+    </van-cell-group>
   </div>
 </template>
 
 <script>
+import { getUserInfo } from '@/api/article.js'
+import { removeToken } from '@/utils/local.js'
 export default {
   name: 'user-page',
   data () {
     return {
-
+      info: {}
     }
   },
   async created () {
-
+    const { data } = await getUserInfo()
+    console.log(data)
+    this.info = data.data
   },
   methods: {
-
+    doLogout () {
+      removeToken()
+      this.$router.push('/login')
+    }
   }
 }
 </script>

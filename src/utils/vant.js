@@ -2,7 +2,7 @@
 import Vue from 'vue'
 
 // 引入组件
-import { Button, Tabbar, TabbarItem, Tab, Tabs, NavBar, Form, Field, Toast, Cell, CellGroup, List } from 'vant'
+import { Button, Icon, Tabbar, TabbarItem, Tab, Tabs, NavBar, Form, Field, Toast, Cell, CellGroup, List, Grid, GridItem } from 'vant'
 
 // 使用组件
 Vue.use(Button)
@@ -17,3 +17,7 @@ Vue.use(Toast)
 Vue.use(Cell)
 Vue.use(CellGroup)
 Vue.use(List)
+Vue.use(Grid)
+Vue.use(GridItem)
+Vue.use(CellGroup)
+Vue.use(Icon)

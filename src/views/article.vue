@@ -2,8 +2,18 @@
   <div class="article-page">
     <!-- 顶部导航 -->
     <nav class="my-nav van-hairline--bottom">
-      <a href="javascript:;">推荐</a>
-      <a href="javascript:;">最新</a>
+      <a
+        href="javascript:;"
+        :class="{ active: sorter === 'weight_desc' }"
+        @click="doClick('weight_desc')"
+        >推荐</a
+      >
+      <a
+        href="javascript:;"
+        :class="{ active: sorter === '' }"
+        @click="doClick('')"
+        >最新</a
+      >
       <div class="logo"><img src="@/assets/logo.png" alt="" /></div>
     </nav>
 
@@ -18,6 +28,7 @@
         v-for="item in list"
         :key="item.id"
         :item="item"
+        @click.native="$router.push(`/detail/${item.id}`)"
       ></ArticleItem>
     </van-list>
   </div>
@@ -32,8 +43,9 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      current: 30,
-      pageSize: 10
+      current: 1,
+      pageSize: 10,
+      sorter: 'weight_desc'
     }
   },
   methods: {
@@ -41,7 +53,8 @@ export default {
       // 异步更新数据
       const { data } = await getArticleList({
         current: this.current,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        sorter: this.sorter
       })
       console.log(data)
       this.list.push(...data.data.rows)
@@ -50,6 +63,14 @@ export default {
       if (!data.data.rows.length) {
         this.finished = true
       }
+    },
+    doClick (type) {
+      this.sorter = type
+      this.list = []
+      this.current = 1
+      this.finished = false
+      this.loading = true
+      this.onLoad()
     }
   }
 }
